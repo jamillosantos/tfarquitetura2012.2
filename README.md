@@ -22,3 +22,4 @@ Referências
 1. http://wiki.osdev.org/ELF
 2. http://www.skyfree.org/linux/references/ELF_Format.pdf
 3. http://www.linux-mips.org/wiki/ELF
+4. http://en.wikibooks.org/wiki/MIPS_Assembly/
