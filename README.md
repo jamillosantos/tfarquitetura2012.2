@@ -7,10 +7,10 @@ Professor: [Eduardo Bráulio](http://dietinf.ifrn.edu.br/doku.php?id=corpodocent
 
 Contribuidores
 --------------
-* Gercino Júnior
+* [Gercino Júnior](http://github.com/gercinojr)
 * Ivan Diniz
 * [Jamillo Santos](http://github.com/jamillosantos)
-* Joab Mendes
+* [Joab Mendes](http://github.com/JoabMendes)
 
 Objetivo
 --------
