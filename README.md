@@ -8,7 +8,7 @@ Professor: [Eduardo Bráulio](http://dietinf.ifrn.edu.br/doku.php?id=corpodocent
 Contribuidores
 --------------
 * [Gercino Júnior](http://github.com/gercinojr)
-* Ivan Diniz
+* [Ivan Diniz](http://github.com/ivandiniz)
 * [Jamillo Santos](http://github.com/jamillosantos)
 * [Joab Mendes](http://github.com/JoabMendes)
 
