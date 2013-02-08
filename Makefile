@@ -7,7 +7,7 @@ MARS = java -jar ../../Mars_4_2.jar nc
 # 	Modo projeto.
 
 main:
-	$(MARS) main.asm
+	$(MARS) p main.asm pa tests/helloworld/a.out
 
 args:
 	$(MARS) args.asm pa parametro1 parametro2 blablabla 
