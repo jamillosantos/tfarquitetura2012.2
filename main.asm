@@ -22,14 +22,19 @@ main:
 	# $t0: Posição do cabeçalho na memória!
 	move $t0, $sp
 
-	move $a0, $t0
-	li $v0, 1
-	syscall
+	# Imprime endereço do cabeçalho na memória
+	# move $a0, $t0
+	# li $v0, 1
+	# syscall
 
+	# Imprime string apenas para verificação
 	li $v0, 4
 	# lw $a0, 0($t0)
 	move $a0, $t0
 	syscall
+
+	move $a0, $t0
+	jal header_dump
 # }
 
 	# Exiting!
