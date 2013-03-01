@@ -10,7 +10,12 @@
 #	.globl header_get_entry
 # }
 
-# Header machine
+
+################################################################################
+# ELF Header
+################################################################################
+
+# Machine
 .eqv	EM_NONE					0
 .eqv	EM_M32					1
 .eqv	EM_SPARC				2
@@ -20,18 +25,10 @@
 .eqv	EM_860					7
 .eqv	EM_MIPS					8
 
-.eqv	PT_NULL					0
-.eqv	PT_LOAD					1
-.eqv	PT_DYNAMIC				2
-.eqv	PT_INTERP				3
-.eqv	PT_NOTE					4
-.eqv	PT_SHLIB				5
-.eqv	PT_PHDR					6
-.eqv	PT_LOPROC				0x70000000
-.eqv	PT_HIPROC				0x7fffffff
-
+# Tamanho máximo das strings contendo as strings do nome das máquinas
 .eqv	STR_EM_LENGTH			16
 
+# 
 .eqv	EI_MAG0					0
 .eqv	EI_MAG1					1
 .eqv	EI_MAG2					2
@@ -94,18 +91,58 @@
 # Symbol table consts
 ################################################################################
 
-# ?????
+# Symbol binding
 .eqv	STB_LOCAL				0
 .eqv	STB_GLOBAL				1
 .eqv	STB_WEAK				2
 .eqv	STB_LOPROC				13
 .eqv	STB_HIPROC				15
 
+# Symbol Types
+.eqv	STT_NOTYPE				0
+.eqv	STT_OBJECT				1
+.eqv	STT_FUNC				2
+.eqv	STT_SECTION				3
+.eqv	STT_FILE				4
+.eqv	STT_LOPROC				13
+.eqv	STT_HIPROC				1
+
+################################################################################
+# Relocation
+################################################################################
+
+# Relocation types (Figure 1-22, pg. 29/1-23)
+.eqv	R_386_NONE				0
+.eqv	R_386_32				1
+.eqv	R_386_PC32				2
+.eqv	R_386_GOT32				3
+.eqv	R_386_PLT32				4
+.eqv	R_386_COPY				5
+.eqv	R_386_GLOB_DAT			6
+.eqv	R_386_JMP_SLOT			7
+.eqv	R_386_RELATIVE			8
+.eqv	R_386_GOTOFF			9
+.eqv	R_386_GOTPC				10
+
+#################################################################################
+# Program header
+################################################################################
+
+# Segment Types
+.eqv	PT_NULL					0
+.eqv	PT_LOAD					1
+.eqv	PT_DYNAMIC				2
+.eqv	PT_INTERP				3
+.eqv	PT_NOTE					4
+.eqv	PT_SHLIB				5
+.eqv	PT_PHDR					6
+.eqv	PT_LOPROC				0x70000000
+.eqv	PT_HIPROC				0x7fffffff
 
 ################################################################################
 # Data
 ################################################################################
-.data
+data
 	str_em_FIRST:
 	str_em_none:	.asciiz "None"
 	.align 4
@@ -475,7 +512,7 @@ sh_get_flags:
 # }
 
 sh_get_addr:
-# {
+# {elf
 	_header_savestack
 
 	addi $a0, $a0, 12
@@ -627,6 +664,42 @@ st_get_shndx:
 	_header_restorestack
 	jr $ra
 # }
+
+################################################################################
+# Relocation
+################################################################################
+
+rel_get_offset:
+# {
+	_header_savestack
+
+	jal endian_read_w
+
+	_header_restorestack
+# }
+
+rel_get_info:
+# {
+	_header_savestack
+
+	addi $a0, $a0, 4
+	jal endian_read_w
+
+	_header_restorestack
+	jr $ra
+# }
+
+rela_get_addend:
+# {
+	_header_savestack
+
+	addi $a0, $a0, 8
+	jal endian_read_sw
+
+	_header_restorestack
+	jr $ra
+# }
+
 
 # Imprime os dados do cabeçalho
 # @param $a0 Endereço do início do cabeçalho na memória
