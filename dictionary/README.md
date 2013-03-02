@@ -1,4 +1,4 @@
-#Especificação dos bytes dos tipos de instruções :
+##Especificação dos bytes dos tipos de instruções :
 
 - Impressão: `pack("C", OPC)`
 
