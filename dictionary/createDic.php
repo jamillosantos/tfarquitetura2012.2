@@ -98,19 +98,19 @@ $dic = array(
     array('opcode' => "02", 'function' => "00", 'type' => 12, 'asc' => 'j'),
     array('opcode' => "03", 'function' => "00", 'type' => 12, 'asc' => 'jal'),
     
-    //Coprocessor-Type12 - op rs fd
-    array("opcode" => "11", 'function' => "00", "type" => 12, "asc" => "mtc1"),
+    //Coprocessor-Type13 - op rs fd
+    array("opcode" => "11", 'function' => "00", "type" => 13, "asc" => "mtc1"),
 
-    //Coprocessor-Type13 - op fd fs 
-    array("opcode" => "11", 'function' => "20", "type" => 13, "asc" => "cvt.s.w"),
-    array("opcode" => "11", 'function' => "24", "type" => 13, "asc" => "cvt.w.s"),
-    array("opcode" => "11", 'function' => "06", "type" => 13, "asc" => "mov.s"),
+    //Coprocessor-Type14 - op fd fs 
+    array("opcode" => "11", 'function' => "20", "type" => 14, "asc" => "cvt.s.w"),
+    array("opcode" => "11", 'function' => "24", "type" => 14, "asc" => "cvt.w.s"),
+    array("opcode" => "11", 'function' => "06", "type" => 14, "asc" => "mov.s"),
 
-    //Coprocessor-Type14 - op fd fs ft
-    array("opcode" => "11", 'function' => "00", "type" => 14, "asc" => "add.s"),
-    array("opcode" => "11", 'function' => "03", "type" => 14, "asc" => "div.s"),
-    array("opcode" => "11", 'function' => "02", "type" => 14, "asc" => "mul.s"),
-    array("opcode" => "11", 'function' => "01", "type" => 14, "asc" => "sub.s")
+    //Coprocessor-Type15 - op fd fs ft
+    array("opcode" => "11", 'function' => "00", "type" => 15, "asc" => "add.s"),
+    array("opcode" => "11", 'function' => "03", "type" => 15, "asc" => "div.s"),
+    array("opcode" => "11", 'function' => "02", "type" => 15, "asc" => "mul.s"),
+    array("opcode" => "11", 'function' => "01", "type" => 15, "asc" => "sub.s")
 );
 
 foreach($dic as $d){
