@@ -1,24 +1,8 @@
-##Especificação dos bytes dos tipos de instruções :
 
-- Impressão: `pack("C", OPC)`
+##Definição de busca e uso do dicionário (Em Construção)
 
-
-- OPC = `0` - |OP|RG|
-
-- OPC = `1` - |OP|RG|RG|
-
-- OPC = `2` - |OP|RG|RG|RG|
-
-- OPC = `3` - |OP|RG|IMMEDIATE|
-
-- OPC = `4` - |OP|RG|RG|IMMEDIATE|
-
-- OPC = `5` - |OP|RG|LABEL|
-
-- OPC = `6` - |OP|RG|RG|LABEL|
-
-- OPC = `7` - |LABEL|
-
-- OPC = `8` - |OP|
-
-
+	A busca no dicionário deve ser feita pela instrução. Verfica-se
+	o 6 primeiros bits que identificam o opcode e o tipo de instrução
+	caso o opcode seja '000000' isso idica que o tipo da intrução
+	é R e deve ser identificada pelos 6 ultimos bits que representam
+	a função

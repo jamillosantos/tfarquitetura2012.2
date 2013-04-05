@@ -11,90 +11,111 @@ try {
 $fp = fopen("dictionary", "w+");
 
 // escreve segundo paramentro no arquivo de $fp
+//Refazer 
+/*
+ *  array("opcode" => "00", function = "", "type" => 0, "asc" => "")
+ *  fwrite( $fp, pack("H*", $d["opc"]).pack("H*", $d["function"]).pack("C", $d["type"]).str_pad($d["asc"], 12, "\0")  ); 
+ */
 $dic = array(
-    //Non-Jump R-Type0  op rg
-    array('ins' => "08", 'opc' => 0, 'asc' => 'jr'),
-    array('ins' => "10", 'opc' => 0, 'asc' => 'mfhi'),
-    array('ins' => "12", 'opc' => 0, 'asc' => 'mflo'),
-    array('ins' => "11", 'opc' => 0, 'asc' => 'mthi'),
-    array('ins' => "13", 'opc' => 0, 'asc' => 'mtlo'),
+    //R-Type0 - op
+    array('opcode' => "00", 'function' => "0C", 'type' => 0, 'asc' => 'syscall'),
+    array('opcode' => "00", 'function' => "0D", 'type' => 0, 'asc' => 'break'),
+
+    //R-Type1 - op rs
+    array("opcode" => "00", 'function' => "08", 'type' => 1, 'asc' => 'jr'),
+    array("opcode" => "00", 'function' => "11", 'type' => 1, 'asc' => 'mthi'),
+    array("opcode" => "00", 'function' => "13", 'type' => 1, 'asc' => 'mtlo'),
+
+    //R-Type2 - op rd
+    array("opcode" => "00", 'function' => "10", 'type' => 2, 'asc' => 'mfhi'),
+    array("opcode" => "00", 'function' => "12", 'type' => 2, 'asc' => 'mflo'),
+
+    //R-Type3 - op rs rt
+    array("opcode" => "00", 'function' => "18", 'type' => 3, 'asc' => 'mult'),
+    array("opcode" => "00", 'function' => "19", 'type' => 3, 'asc' => 'multu'),
+    array("opcode" => "00", 'function' => "1A", 'type' => 3, 'asc' => 'div'),
+    array("opcode" => "00", 'function' => "1B", 'type' => 3, 'asc' => 'divu'),
+
+    //R-Type4 - op rd rs
+    array("opcode" => "00", 'function' => "09", 'type' => 4, 'asc' => 'jalr'),
+
+    //R-Type5 - op rd rs rt
+    array("opcode" => "00", 'function' => "20", 'type' => 5, 'asc' => 'add'),
+    array("opcode" => "00", 'function' => "21", 'type' => 5, 'asc' => 'addu'),
+    array("opcode" => "00", 'function' => "22", 'type' => 5, 'asc' => 'sub'),
+    array("opcode" => "00", 'function' => "23", 'type' => 5, 'asc' => 'subu'),
+    array("opcode" => "00", 'function' => "24", 'type' => 5, 'asc' => 'and'),
+    array("opcode" => "00", 'function' => "25", 'type' => 5, 'asc' => 'or'),
+    array("opcode" => "00", 'function' => "26", 'type' => 5, 'asc' => 'xor'),
+    array("opcode" => "00", 'function' => "27", 'type' => 5, 'asc' => 'nor'),
+    array("opcode" => "00", 'function' => "2A", 'type' => 5, 'asc' => 'slt'),
+    array("opcode" => "00", 'function' => "2B", 'type' => 5, 'asc' => 'sltu'),
+
+    //R-Type6 - op rd rt rs
+    array("opcode" => "00", 'function' => "04", 'type' => 6, 'asc' => 'sllv'),
+    array("opcode" => "00", 'function' => "06", 'type' => 6, 'asc' => 'srlv'),
+    array("opcode" => "00", 'function' => "07", 'type' => 6, 'asc' => 'srav'),
+
+    //R-Type7 - op rd rt sa
+    array("opcode" => "00", 'function' => "00", 'type' => 7, 'asc' => 'sll'),
+    array("opcode" => "00", 'function' => "02", 'type' => 7, 'asc' => 'srl'),
+    array("opcode" => "00", 'function' => "03", 'type' => 7, 'asc' => 'sra'),
     
-    //Non-Jump R-Type1  op rg rg
-    array('ins' => "1A", 'opc' => 1, 'asc' => 'div'),
-    array('ins' => "1B", 'opc' => 1, 'asc' => 'divu'),
-    array('ins' => "09", 'opc' => 1, 'asc' => 'jalr'),
-    array('ins' => "18", 'opc' => 1, 'asc' => 'mult'),
-    array('ins' => "19", 'opc' => 1, 'asc' => 'multu'),
-    array('ins' => "20", 'opc' => 1, 'asc' => 'cvt.s.w'),
-    array('ins' => "24", 'opc' => 1, 'asc' => 'cvt.w.s'),
-    array('ins' => "06", 'opc' => 1, 'asc' => 'mov.s'),
+
+    //I-Type8 - op rs label
+    array('opcode' => "01", 'function' => "00", 'type' => 8, 'asc' => 'bltz'),
+    array('opcode' => "01", 'function' => "00", 'type' => 8, 'asc' => 'bgez'),
+    array('opcode' => "06", 'function' => "00", 'type' => 8, 'asc' => 'blez'),
+    array('opcode' => "07", 'function' => "00", 'type' => 8, 'asc' => 'bgtz'),
+
+    //I-Type9 - op rs rt label
+    array('opcode' => "04", 'function' => "00", 'type' => 9, 'asc' => 'beq'),
+    array('opcode' => "05", 'function' => "00", 'type' => 9, 'asc' => 'bne'),
+
+    //I-Type10 - op rt rs immediate
+    array('opcode' => "08", 'function' => "00", 'type' => 10, 'asc' => 'addi'),
+    array('opcode' => "09", 'function' => "00", 'type' => 10, 'asc' => 'addiu'),
+    array('opcode' => "0A", 'function' => "00", 'type' => 10, 'asc' => 'slti'),
+    array('opcode' => "0B", 'function' => "00", 'type' => 10, 'asc' => 'sltiu'),
+    array('opcode' => "0C", 'function' => "00", 'type' => 10, 'asc' => 'andi'),
+    array('opcode' => "0D", 'function' => "00", 'type' => 10, 'asc' => 'ori'),
+    array('opcode' => "0E", 'function' => "00", 'type' => 10, 'asc' => 'xori'),
+
+    //I-Type11 - op rt immediate(rs)
+    array('opcode' => "0F", 'function' => "00", 'type' => 11, 'asc' => 'lui'),
+    array('opcode' => "20", 'function' => "00", 'type' => 11, 'asc' => 'lb'),
+    array('opcode' => "21", 'function' => "00", 'type' => 11, 'asc' => 'lh'),
+    array('opcode' => "23", 'function' => "00", 'type' => 11, 'asc' => 'lw'),
+    array('opcode' => "24", 'function' => "00", 'type' => 11, 'asc' => 'lbu'),
+    array('opcode' => "25", 'function' => "00", 'type' => 11, 'asc' => 'lhu'),
+    array('opcode' => "28", 'function' => "00", 'type' => 11, 'asc' => 'sb'),
+    array('opcode' => "29", 'function' => "00", 'type' => 11, 'asc' => 'sh'),
+    array('opcode' => "2B", 'function' => "00", 'type' => 11, 'asc' => 'sw'),
+    array('opcode' => "31", 'function' => "00", 'type' => 11, 'asc' => 'lwcl'),
+    array('opcode' => "39", 'function' => "00", 'type' => 11, 'asc' => 'swcl'),
     
-    //Non-Jump R-Type2  op rg rg rg
-    array('ins' => "20", 'opc' => 2, 'asc' => 'add'),
-    array('ins' => "21", 'opc' => 2, 'asc' => 'addu'),
-    array('ins' => "24", 'opc' => 2, 'asc' => 'and'),
-    array('ins' => "27", 'opc' => 2, 'asc' => 'nor'),
-    array('ins' => "25", 'opc' => 2, 'asc' => 'or'),
-    array('ins' => "00", 'opc' => 2, 'asc' => 'sll'),
-    array('ins' => "04", 'opc' => 2, 'asc' => 'sllv'),
-    array('ins' => "2A", 'opc' => 2, 'asc' => 'slt'),
-    array('ins' => "2B", 'opc' => 2, 'asc' => 'sltu'),
-    array('ins' => "03", 'opc' => 2, 'asc' => 'sra'),
-    array('ins' => "07", 'opc' => 2, 'asc' => 'srav'),
-    array('ins' => "02", 'opc' => 2, 'asc' => 'srl'),
-    array('ins' => "06", 'opc' => 2, 'asc' => 'srlv'),
-    array('ins' => "22", 'opc' => 2, 'asc' => 'sub'),
-    array('ins' => "23", 'opc' => 2, 'asc' => 'subu'),
-    array('ins' => "26", 'opc' => 2, 'asc' => 'xor'),
-    array('ins' => "00", 'opc' => 2, 'asc' => 'add.s'),
-    array('ins' => "03", 'opc' => 2, 'asc' => 'div.s'),
-    array('ins' => "02", 'opc' => 2, 'asc' => 'mul.s'),
-    array('ins' => "01", 'opc' => 2, 'asc' => 'sub.s'),
+    //J-Type12 op label
+    array('opcode' => "02", 'function' => "00", 'type' => 12, 'asc' => 'j'),
+    array('opcode' => "03", 'function' => "00", 'type' => 12, 'asc' => 'jal'),
     
-    //I-Type3 op rg imm
-    array('ins' => "20", 'opc' => 3, 'asc' => 'lb'),
-    array('ins' => "24", 'opc' => 3, 'asc' => 'lbu'),
-    array('ins' => "21", 'opc' => 3, 'asc' => 'lh'),
-    array('ins' => "25", 'opc' => 3, 'asc' => 'lhu'),
-    array('ins' => "0F", 'opc' => 3, 'asc' => 'lui'),
-    array('ins' => "23", 'opc' => 3, 'asc' => 'lw'),
-    array('ins' => "31", 'opc' => 3, 'asc' => 'lwcl'),
-    array('ins' => "29", 'opc' => 3, 'asc' => 'sh'),
-    array('ins' => "2B", 'opc' => 3, 'asc' => 'sw'),
-    array('ins' => "39", 'opc' => 3, 'asc' => 'swcl'),
-   
-    //I-Type4 op rg rg imm
-    array('ins' => "08", 'opc' => 4, 'asc' => 'addi'),
-    array('ins' => "09", 'opc' => 4, 'asc' => 'addiu'),
-    array('ins' => "0C", 'opc' => 4, 'asc' => 'andi'),
-    array('ins' => "0D", 'opc' => 4, 'asc' => 'ori'),
-    array('ins' => "09", 'opc' => 4, 'asc' => 'slti'),
-    array('ins' => "0B", 'opc' => 4, 'asc' => 'sltiu'),
-    array('ins' => "0E", 'opc' => 4, 'asc' => 'xori'),
-    
-    //I-Type5 op rg label
-    array('ins' => "01", 'opc' => 5, 'asc' => 'bgez'),
-    array('ins' => "07", 'opc' => 5, 'asc' => 'bgtz'),
-    array('ins' => "06", 'opc' => 5, 'asc' => 'blez'),
-    array('ins' => "01", 'opc' => 5, 'asc' => 'bltz'),
-    array('ins' => "02", 'opc' => 5, 'asc' => 'j'),
-    array('ins' => "03", 'opc' => 5, 'asc' => 'jal'),
-    
-    //I-Type6 op rg rg label
-    array('ins' => "04", 'opc' => 6, 'asc' => 'beq'),
-    array('ins' => "05", 'opc' => 6, 'asc' => 'bne'),
-    
-    //J-Type7 op label
-    array('ins' => "02", 'opc' => 7, 'asc' => 'j'),
-    array('ins' => "03", 'opc' => 7, 'asc' => 'jal'),
-    
-    //Type8 op
-    array('ins' => "0D", 'opc' => 8, 'asc' => 'break'),
-    array('ins' => "0C", 'opc' => 8, 'asc' => 'syscall')
+    //Coprocessor-Type12 - op rs fd
+    array("opcode" => "11", 'function' => "00", "type" => 12, "asc" => "mtc1"),
+
+    //Coprocessor-Type13 - op fd fs 
+    array("opcode" => "11", 'function' => "20", "type" => 13, "asc" => "cvt.s.w"),
+    array("opcode" => "11", 'function' => "24", "type" => 13, "asc" => "cvt.w.s"),
+    array("opcode" => "11", 'function' => "06", "type" => 13, "asc" => "mov.s"),
+
+    //Coprocessor-Type14 - op fd fs ft
+    array("opcode" => "11", 'function' => "00", "type" => 14, "asc" => "add.s"),
+    array("opcode" => "11", 'function' => "03", "type" => 14, "asc" => "div.s"),
+    array("opcode" => "11", 'function' => "02", "type" => 14, "asc" => "mul.s"),
+    array("opcode" => "11", 'function' => "01", "type" => 14, "asc" => "sub.s")
 );
 
 foreach($dic as $d){
-    fwrite( $fp, pack("H*", $d["ins"]).pack("C", $d["opc"]).str_pad($d["asc"], 12, "\0")  );   
+    //fwrite( $fp, pack("H*", $d["i"]).pack("C", $d["opc"]).str_pad($d["asc"], 12, "\0")  );   
+    fwrite( $fp, pack("H*", $d["opcode"]).pack("H*", $d["function"]).pack("C", $d["type"]).str_pad($d["asc"], 12, "\0")  );
 }
 
 // Fecha o arquivo
