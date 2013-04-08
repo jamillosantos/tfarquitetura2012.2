@@ -1,7 +1,11 @@
 # version: 1.1.0
 # label prefix: b#_
 
-        .text
+.globl printStr
+.globl printInt
+.globl readStr
+
+.text
 
 ################################################################################
 printStr:
