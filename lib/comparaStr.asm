@@ -1,6 +1,8 @@
 # label prefix: d#_
 
-        .text
+.globl comparaStr
+
+.text
 
 comparaStr:
         # $ao = endereco da string1
