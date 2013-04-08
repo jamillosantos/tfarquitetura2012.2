@@ -1,5 +1,7 @@
 # label prefix: lble_
 
+.globl file_load
+
         .data 
         
         .align 2
@@ -110,38 +112,7 @@ lble_lend1:
         move $a0, $t0      # id do arquivo
         addi $v0, $0, 16   # codigo de servico para fechamento de arquivos
         syscall
-        
-        # ================================
-        # pede confirmacao de carregamento
-        # ================================
-        
-        la   $a0, lble_msg0
-        jal  printStr
-        lw   $a0, -12($fp)
-        jal  printInt
-        la   $a0, lble_msg1
-        jal  printStr
-        la   $a0, lble_buffer0
-        addi $a1, $0, 4
-        jal  readStr
-        
-        addi $t0, $0, 115 # ascii s
-        la   $a0, lble_buffer0
-        lb   $t1, 0($a0)
-                           
-        beq $t0, $t1, lble_2
-        # {
-            # ==================
-            # confirmacao negada
-            # ==================
-            
-            la   $a0, lble_err1
-            jal  printStr
-            
-            add $v0, $0, $0 # (erro) 
-            add $a0, $0, $t0
-            j lble_exit
-        # }
+
 lble_2:
         # ==================
         # confirmacao cedida
