@@ -3,6 +3,7 @@
 
 .globl printStr
 .globl printInt
+.globl printHex
 .globl readStr
 
 ################################################################################
@@ -17,6 +18,29 @@
 	lw $v0, 8($sp)
 	addi $sp, $sp, 8
 .end_macro
+
+################################################################################
+printHex:
+	# $a0 = the integer to print
+	
+	# prologo ----------
+	addiu $sp, $sp, -8
+	sw	$ra, 4($sp)
+	sw	$fp, 0($sp)
+	addu  $fp, $0, $sp
+	# ------------------
+	
+	addi $2, $0, 34  # print integer service
+	syscall
+
+	# epilogo ----------
+	addu  $sp, $0, $fp
+	lw	$ra, 4($sp)
+	lw	$fp, 0($sp)
+	addiu $sp, $sp, 8
+	# ------------------
+
+	jr $ra
 
 ################################################################################
 .macro printHex(%hex)

@@ -1,7 +1,9 @@
 # version: 1.1.0
 # label prefix: c#_
 
-        .data 
+.globl inicializar
+
+.data
         
 max_param:
         .word 2
@@ -64,9 +66,9 @@ c1_msg:
                 "#  e inicia a interpretacao/traducao do codigo fonte.  #\n"
                 "#                                                      #\n"
                 "########################################################\n\0"
-                
-        .text
-        
+
+    .text
+    
 inicializar:
         # $a0 = argc: quantidade de parametros
         # $a1 = argv: array de ponteiros para os parametros
@@ -80,7 +82,7 @@ inicializar:
         sw      $fp, 0($sp)
         addu    $fp, $0, $sp
         # ------------------
-        
+
         addiu $sp, $sp, -16   # espaco para variaveis locais
         
         bne $a0, $0, c0_endif   # if(argc == 0)
@@ -144,15 +146,16 @@ c4_endif:
 
 c2_endif:
 
-        # tentar carregar arquivo fonte...
-        addi $v0, $0, 2 # (sao dois parametros!)
+    # tentar carregar arquivo fonte...
+    addi $v0, $0, 2 # (sao dois parametros!)
         
 c_end:
-        # epilogo ----------
-        addu    $sp, $0, $fp
-        lw      $ra, 4($sp)
-        lw      $fp, 0($sp)
-        addiu   $sp, $sp, 8
-        # ------------------
-        
-        jr $ra
+
+    # epilogo ----------
+    addu    $sp, $0, $fp
+    lw      $ra, 4($sp)
+    lw      $fp, 0($sp)
+    addiu   $sp, $sp, 8
+    # ------------------
+
+    jr $ra

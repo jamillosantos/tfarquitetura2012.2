@@ -1,6 +1,7 @@
 # version: 1.1.0
 # label prefix: lbla_
 
+.include "./lib/heap.asm"
 .include "./lib/stdio.asm"
 .include "./lib/comparaStr.asm"
 .include "./lib/file_load.asm"
@@ -12,7 +13,10 @@
 .include "./lib/file_read_sw.asm"
 .include "./lib/file_seek.asm"
 .include "./lib/file_seek_abs.asm"
-.include "inicializar.asm"
+
+.include "./lib/dict/load.asm"
+
+.include "./lib/inicializar.asm"
 
 .include "./lib/elf/header.asm"
 .include "./lib/elf/section_header.asm"
@@ -71,11 +75,7 @@ main:
 
 #===============================================================================
 	
-	# ==============
-	# PROGRAMA TESTE
-	# ==============
-	
-	.data
+.data
 
 NL:	  # New line
 	.asciiz "\n" 
@@ -83,15 +83,27 @@ NL:	  # New line
 lbla_msg1:
 	.asciiz "erro\n"		 
 
+data_inicializar_dict_filename:
+    .asciiz "dictionary/dictionary"
+
 .text
 
-	move $a0, $s0
+	# Guarda o início do dicionário
+	# -----------------------------
+    la $a0, data_inicializar_dict_filename
+    jal dict_load
+    move $s2, $v0
+    printHex($s2)
+
 
 	# Guarda o início do endereço do arquivo!
 	# ---------------------------------------
+	move $a0, $s0
 	jal file_addr
 	move $s1, $v0
 	printHex($s0)
+
+    printStr("\n---------")
 
 	# Dumping header
 	printLn
