@@ -1,5 +1,6 @@
 
 MARS = java -jar ../../Mars4_3.jar sm nc me ae255
+MEMORY = 0x100111080-0x100111090
 # Options
 #   sm    = Start execution at statement having global label 'main' if defined;
 #
@@ -21,10 +22,13 @@ MARS = java -jar ../../Mars4_3.jar sm nc me ae255
 
 
 main:
-	$(MARS) p main.asm pa tests/helloworld/a.out arquivodestino
+	$(MARS) p main.asm pa tests/soma/soma arquivodestino
 
 dump:
-	$(MARS) ascii 0x100108c0-0x10010acc 0x1008ff00-0x100900cc p main.asm pa tests/helloworld/a.out arquivodestino
+	$(MARS) ascii $(MEMORY) p main.asm pa tests/helloworld/a.out arquivodestino
+
+dumphex:
+	$(MARS) hex $(MEMORY) p main.asm pa tests/helloworld/a.out arquivodestino
 
 args:
 	$(MARS) args.asm pa parametro1 parametro2 blablabla 

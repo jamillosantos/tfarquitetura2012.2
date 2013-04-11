@@ -1,7 +1,7 @@
 
 .globl dict_load
 
-.eqv	DICT_SIZE				930
+.eqv	DICT_SIZE				1008
 
 .data
 	data_dict:
@@ -12,8 +12,8 @@
 
 dict_load:
 	add $sp, $sp, -8
-	sw $s0, 4($sp)
-	sw $s1, 8($sp)
+	sw $s0, 0($sp)
+	sw $s1, 4($sp)
 
 	move $s1, $a0
 
@@ -41,8 +41,10 @@ dict_load:
 	move $a0, $s1				# Id do arquivo
 	syscall
 
-	lw $s0, 4($sp)
-	lw $s1, 0($sp)
+	move $v0, $s0
+
+	lw $s0, 0($sp)
+	lw $s1, 4($sp)
 	add $sp, $sp, 8
 
 	jr $ra

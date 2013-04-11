@@ -16,8 +16,6 @@ file_read_h:
         addiu $a1, $0, 2 # numero de bytes a ser lido
         jal file_read
         
-lblh_exit:
-        
         # epilogo ----------
         addu    $sp, $0, $fp
         lw      $ra, 4($sp)

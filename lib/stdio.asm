@@ -9,13 +9,13 @@
 ################################################################################
 .macro _stdio_savestack()
 	addi $sp, $sp, -8
-	sw $a0, 4($sp)
-	sw $v0, 8($sp)
+	sw $a0, 0($sp)
+	sw $v0, 4($sp)
 .end_macro
 
 .macro _stdio_restorestack()
-	lw $a0, 4($sp)
-	lw $v0, 8($sp)
+	lw $a0, 0($sp)
+	lw $v0, 4($sp)
 	addi $sp, $sp, 8
 .end_macro
 

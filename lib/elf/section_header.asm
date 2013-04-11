@@ -60,17 +60,17 @@
 .text
 
 .macro _sh_savestack
-	add $sp, $sp, -12
-	sw $ra, 4($sp)
-	sw $s0, 8($sp)
-	sw $s1, 12($sp)
+	addi $sp, $sp, -12
+	sw $ra, 0($sp)
+	sw $s0, 4($sp)
+	sw $s1, 8($sp)
 .end_macro
 
 .macro _sh_restorestack
-	lw $ra, 4($sp)
-	lw $s0, 8($sp)
-	lw $s1, 12($sp)
-	add $sp, $sp, 12
+	lw $ra, 0($sp)
+	lw $s0, 4($sp)
+	lw $s1, 8($sp)
+	addi $sp, $sp, 12
 .end_macro
 
 ################################################################################
@@ -252,7 +252,7 @@ sh_get_entsize:
 section_header_dump:
 # {
 	addi $sp, $sp, -8
-	sw $ra, 8($sp)
+	sw $ra, 0($sp)
 	sw $s0, 4($sp)
 
 	# Salva parâmetro para uso posterior
@@ -314,6 +314,10 @@ section_header_dump:
 	jal sh_get_size
 	printHex($v0)
 
+	printStr(" (")
+	printInt($v0)
+	printStr(")")
+
 	##
 
 	printStr("\nLink: ")
@@ -344,7 +348,7 @@ section_header_dump:
 
 	##
 
-	lw $ra, 8($sp)
+	lw $ra, 0($sp)
 	lw $s0, 4($sp)
 	addi $sp, $sp, 8
 

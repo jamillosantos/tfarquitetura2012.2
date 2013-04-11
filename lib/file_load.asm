@@ -34,9 +34,9 @@ file_load:
         # $v0: Zero para erro. Endereço de memória da estrutura alocado.
         
         # prologo ----------
-        addiu $sp, $sp, -8
-        sw    $ra, 4($sp)
-        sw    $fp, 0($sp)
+        addi  $sp, $sp, -8
+        sw    $ra, 0($sp)
+        sw    $fp, 4($sp)
         addu  $fp, $0, $sp
         # ------------------
         
@@ -275,9 +275,9 @@ lble_exit:
         
         # epilogo ----------
         addu    $sp, $0, $fp
-        lw      $ra, 4($sp)
-        lw      $fp, 0($sp)
-        addiu   $sp, $sp, 8
+        lw      $ra, 0($sp)
+        lw      $fp, 4($sp)
+        addi    $sp, $sp, 8
         # ------------------
 
         jr $ra   

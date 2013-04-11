@@ -15,13 +15,15 @@
 .include "./lib/file_seek_abs.asm"
 
 .include "./lib/dict/load.asm"
+.include "./lib/dict/find.asm"
 
 .include "./lib/inicializar.asm"
 
 .include "./lib/elf/header.asm"
 .include "./lib/elf/section_header.asm"
 .include "./lib/elf/program_header.asm"
-	
+.include "./lib/elf/dis.asm"
+
 .text
 .globl main
 
@@ -92,9 +94,11 @@ data_inicializar_dict_filename:
 	# -----------------------------
     la $a0, data_inicializar_dict_filename
     jal dict_load
+    # $s2: Endereço do dicionário na memória
     move $s2, $v0
+    printStr("# Endereço do dicionário: ")
     printHex($s2)
-
+    printLn
 
 	# Guarda o início do endereço do arquivo!
 	# ---------------------------------------
@@ -113,7 +117,19 @@ data_inicializar_dict_filename:
 
 	move $a0, $s0
 	move $a1, $s1
-	jal header_dump
+	# jal header_dump
+
+	printStr("\nEndereço do dic: ")
+	printHex($s2)
+	printStr("\n\n")
+
+	move $a0, $s0
+	move $a1, $s2
+	addi $a2, $s1, 4252
+	li $a3, 3080
+	jal elf_dis
+
+	j lbla_end
 
 
 	# Dump da seção que guarda a stringtable das seções

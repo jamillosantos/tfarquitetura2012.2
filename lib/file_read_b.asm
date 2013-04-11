@@ -14,3 +14,15 @@ file_read_b:
 
 	addiu $a1, $0, 1 # numero de bytes a ser lido
 	jal file_read
+        
+lbli_exit:
+        
+        # epilogo ----------
+        addu    $sp, $0, $fp
+        lw      $ra, 4($sp)
+        lw      $fp, 0($sp)
+        addiu   $sp, $sp, 8
+        # ------------------
+
+        jr $ra  
+

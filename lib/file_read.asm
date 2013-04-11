@@ -9,8 +9,8 @@ file_read:
 		
 		# prologo ----------
 		addiu $sp, $sp, -8
-		sw	$ra, 4($sp)
-		sw	$fp, 0($sp)
+		sw	$ra, 0($sp)
+		sw	$fp, 4($sp)
 		addu  $fp, $0, $sp
 		# ------------------
 		
@@ -194,8 +194,8 @@ lblf_exit:
 		
 		# epilogo ----------
 		addu	$sp, $0, $fp
-		lw	  $ra, 4($sp)
-		lw	  $fp, 0($sp)
+		lw	  $ra, 0($sp)
+		lw	  $fp, 4($sp)
 		addiu   $sp, $sp, 8
 		# ------------------
 
@@ -216,7 +216,7 @@ lblf_exit:
 
 .macro fileReadW(%offset)
 	add $sp, $sp, -4
-	sw $t0, 4($sp)
+	sw $t0, 0($sp)
 
 	add $at, $a1, %offset
 	lb $v0, 0($at)
@@ -233,13 +233,35 @@ lblf_exit:
 	and $t0, $t0, 0xff
 	or $v0, $v0, $t0
 
-	lw $t0, 4($sp)
+	lw $t0, 0($sp)
+	add $sp, $sp, 4
+.end_macro
+
+.macro fileReadWAddr(%addr)
+	add $sp, $sp, -4
+	sw $t0, 0($sp)
+
+	lb $v0, 0(%addr)
+	sll $v0, $v0, 8
+	lb $t0, 1(%addr)
+	and $t0, $t0, 0xff
+	or $v0, $v0, $t0
+	sll $v0, $v0, 8
+	lb $t0, 2(%addr)
+	and $t0, $t0, 0xff
+	or $v0, $v0, $t0
+	sll $v0, $v0, 8
+	lb $t0, 3(%addr)
+	and $t0, $t0, 0xff
+	or $v0, $v0, $t0
+
+	lw $t0, 0($sp)
 	add $sp, $sp, 4
 .end_macro
 
 .macro fileReadSW(%offset)
 	add $sp, $sp, -4
-	sw $t0, 4($sp)
+	sw $t0, 0($sp)
 
 	add $at, $a1, %offset
 	lb $v0, 0($at)
@@ -256,7 +278,7 @@ lblf_exit:
 	and $t0, $t0, 0xff
 	or $v0, $v0, $t0
 
-	lw $t0, 4($sp)
+	lw $t0, 0($sp)
 	add $sp, $sp, 4
 .end_macro
 
