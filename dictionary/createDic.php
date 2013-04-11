@@ -115,7 +115,7 @@ $dic = array(
 
 foreach($dic as $d){
     //fwrite( $fp, pack("H*", $d["i"]).pack("C", $d["opc"]).str_pad($d["asc"], 12, "\0")  );   
-    fwrite( $fp, pack("H*", $d["opcode"]).pack("H*", $d["function"]).pack("C", $d["type"]).str_pad($d["asc"], 12, "\0")  );
+    fwrite( $fp, pack("H*", $d["opcode"]).pack("H*", $d["function"]).pack("C", $d["type"]).str_pad($d["asc"], 13, "\0")  );
 }
 
 // Fecha o arquivo
